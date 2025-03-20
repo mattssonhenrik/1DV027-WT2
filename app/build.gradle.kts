@@ -6,8 +6,10 @@
  */
 
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
-    application
+    id("java")
+    id("application")
+    id("org.springframework.boot") version "3.2.2"
+    id("io.spring.dependency-management") version "1.1.4"
 }
 
 repositories {
@@ -16,11 +18,31 @@ repositories {
 }
 
 dependencies {
-    // Use JUnit test framework.
-    testImplementation(libs.junit)
+    // Spring Boot + GraphQL
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-graphql")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    
+    // Environment Variables
+    implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
-    // This dependency is used by the application.
-    implementation(libs.guava)
+    // Database
+    implementation("org.postgresql:postgresql:42.6.0") // OR H2
+    implementation("com.h2database:h2")
+
+    // Security (JWT)
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("io.jsonwebtoken:jjwt:0.11.5")
+
+    // Utility (Guava, Lombok)
+    implementation("com.google.guava:guava:33.2.1-jre")
+    implementation("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
+
+
+    // Use JUnit test framework.
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

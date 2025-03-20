@@ -5,17 +5,31 @@ package dv027api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.stereotype.Component;
+import io.github.cdimascio.dotenv.Dotenv;
+
 import org.springframework.context.ApplicationContext; // REmove after testing app-class
+import dv027api.Controller.MovieController;
 
 @SpringBootApplication
 public class App {
 
     public static void main(String[] args) {
+        Dotenv dotenv = Dotenv.configure()
+        .directory(System.getProperty("user.dir"))
+        .filename(".env")
+        .load();
+
+        System.setProperty("DB_URL", dotenv.get("DB_URL"));
+        System.setProperty("DB_USER", dotenv.get("DB_USER"));
+        System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
+        System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
+
         ApplicationContext context =SpringApplication.run(App.class, args);
         App app = context.getBean(App.class);
+        MovieController controller = context.getBean(MovieController.class);
         
         app.greeting();
+        // controller.greeting();
     }
 
     public void greeting() {

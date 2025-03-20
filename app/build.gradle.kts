@@ -28,7 +28,7 @@ dependencies {
 
     // Database
     implementation("org.postgresql:postgresql:42.6.0")
-    implementation("com.h2database:h2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.5")
 
     // Security (JWT)
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -41,6 +41,9 @@ dependencies {
     implementation("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
+    // Jakarta
+    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+    implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 
 
     // Use JUnit test framework.

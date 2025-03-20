@@ -27,12 +27,14 @@ dependencies {
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
     // Database
-    implementation("org.postgresql:postgresql:42.6.0") // OR H2
+    implementation("org.postgresql:postgresql:42.6.0")
     implementation("com.h2database:h2")
 
     // Security (JWT)
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("io.jsonwebtoken:jjwt:0.11.5")
+    implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+    implementation("io.jsonwebtoken:jjwt-impl:0.12.3")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.12.3")
 
     // Utility (Guava, Lombok)
     implementation("com.google.guava:guava:33.2.1-jre")

@@ -3,12 +3,22 @@
  */
 package dv027api;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Component;
+import org.springframework.context.ApplicationContext; // REmove after testing app-class
+
+@SpringBootApplication
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        ApplicationContext context =SpringApplication.run(App.class, args);
+        App app = context.getBean(App.class);
+        
+        app.greeting();
+    }
+
+    public void greeting() {
+        System.out.println("Hi from App-class!");
     }
 }

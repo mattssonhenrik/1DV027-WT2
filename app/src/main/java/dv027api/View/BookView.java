@@ -3,14 +3,11 @@ package dv027api.View;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MovieView {
-  
-  public MovieView() {
+public class BookView {
+  public BookView() {
     this.greeting();
   }
-
   public void greeting() {
-    System.out.println("Hi from MovieView-class!");
+    System.out.println("Hi from BookView-class!");
+  }
 }
-}
-

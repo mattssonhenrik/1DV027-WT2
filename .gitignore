@@ -6,3 +6,6 @@ build/
 
 #environmental variables
 .env
+
+#CSV-files
+data/

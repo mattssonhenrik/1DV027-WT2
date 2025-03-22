@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import org.springframework.context.ApplicationContext; // REmove after testing app-class
-import dv027api.Controller.MovieController;
+import dv027api.Controller.BookController;
 
 @SpringBootApplication
 public class App {
@@ -26,7 +26,7 @@ public class App {
 
         ApplicationContext context =SpringApplication.run(App.class, args);
         App app = context.getBean(App.class);
-        MovieController controller = context.getBean(MovieController.class);
+        BookController controller = context.getBean(BookController.class);
         
         app.greeting();
         // controller.greeting();

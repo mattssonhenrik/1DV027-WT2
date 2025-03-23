@@ -15,7 +15,9 @@ public class Book {
   private String author;
   private double rating; 
 
-  public book (String isbn13, String title, String author, double rating) {
+  // Default constructor for JPA (Jakarta PErsistance)
+  public Book() {} 
+  public Book (String isbn13, String title, String author, double rating) {
     this.isbn13 = isbn13;
     this.title = title;
     this.author = author;

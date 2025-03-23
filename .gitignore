@@ -7,5 +7,5 @@ build/
 #environmental variables
 .env
 
-#CSV-files
-data/
+#CSV-file
+src/main/resources/data/*.csv

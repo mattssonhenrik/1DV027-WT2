@@ -15,6 +15,7 @@ import com.opencsv.CSVReader;
 @Service
 public class SeedBooksService {
   private BookRepository bookRepository;
+  private int inserted;
 
   public SeedBooksService(BookRepository bookRepository) {
     this.bookRepository = bookRepository;
@@ -23,7 +24,7 @@ public class SeedBooksService {
   public String seedBooks() {
     if (bookRepository.count() > 0) {
       System.out.println("Books table is already seeded");
-      return "Books table is already seeded";
+      return "Books table is already seeded. You need to use clearBooks mutation first.";
     }
 
     InputStream input = getClass().getClassLoader().getResourceAsStream("data/books.csv");
@@ -53,10 +54,11 @@ public class SeedBooksService {
 
           if (isbn13.isEmpty() || seenIsbn.contains(isbn13))
             continue;
-            
+
           seenIsbn.add(isbn13);
           Book book = new Book(isbn13, title, author, rating);
           bookRepository.save(book);
+          inserted++;
 
         } catch (Exception e) {
           continue;
@@ -66,7 +68,8 @@ public class SeedBooksService {
       return "An error happened with the seeding";
     }
 
-    System.out.println("Seeded successfully.");
+    System.out.println("Seeded successfully. Inserted " + inserted + " books!");
+    inserted = 0;
     return "Seeded success";
   }
 }

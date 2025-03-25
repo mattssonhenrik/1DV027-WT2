@@ -1,0 +1,15 @@
+type Query {
+  allBooks: [Book]
+}
+
+type Mutation {
+  seedBooks: String
+  clearBooks: String
+}
+
+type Book {
+  isbn13: String
+  title: String
+  author: String
+  rating: Float
+}

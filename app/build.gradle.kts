@@ -21,7 +21,10 @@ dependencies {
     // Spring Boot + GraphQL
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-graphql")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // Bugfinder, disclosing endpoints
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     
     // Environment Variables
     implementation("io.github.cdimascio:dotenv-java:3.0.0")
@@ -30,7 +33,6 @@ dependencies {
     implementation("org.postgresql:postgresql:42.6.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.2.5")
     implementation("com.opencsv:opencsv:5.8")
-
 
     // Security (JWT)
     // implementation("org.springframework.boot:spring-boot-starter-security")

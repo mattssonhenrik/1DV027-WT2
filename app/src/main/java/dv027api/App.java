@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import org.springframework.context.ApplicationContext; // REmove after testing app-class
-import dv027api.Controller.BookController;
 
 @SpringBootApplication
 public class App {
@@ -18,7 +17,6 @@ public class App {
         .directory(System.getProperty("user.dir"))
         .filename(".env")
         .load();
-
         System.setProperty("DB_URL", dotenv.get("DB_URL"));
         System.setProperty("DB_USER", dotenv.get("DB_USER"));
         System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
@@ -26,10 +24,7 @@ public class App {
 
         ApplicationContext context =SpringApplication.run(App.class, args);
         App app = context.getBean(App.class);
-        BookController controller = context.getBean(BookController.class);
-        
         app.greeting();
-        // controller.greeting();
     }
 
     public void greeting() {

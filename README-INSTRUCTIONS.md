@@ -4,4 +4,11 @@ CREATE TABLE books (
     isbn13 VARCHAR(20) PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
-    rating DOUBLE PRECISION)
+    rating DOUBLE PRECISION
+);
+
+    CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);

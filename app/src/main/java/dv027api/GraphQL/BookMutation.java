@@ -2,13 +2,10 @@ package dv027api.GraphQL;
 
 import dv027api.Repository.BookRepository;
 import dv027api.Service.SeedBooksService;
-import dv027api.Model.Book;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 
-import java.util.List;
 
 @Controller
 public class BookMutation {

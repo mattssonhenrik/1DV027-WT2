@@ -5,6 +5,9 @@ type Query {
 type Mutation {
   seedBooks: String
   clearBooks: String
+
+  registerUser(username: String!, password: String!): Boolean
+  loginUser(username: String!, password: String!): Boolean
 }
 
 type Book {

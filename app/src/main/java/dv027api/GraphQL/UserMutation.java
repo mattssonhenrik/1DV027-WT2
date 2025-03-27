@@ -2,20 +2,25 @@ package dv027api.GraphQL;
 
 import dv027api.Repository.UserRepository;
 import dv027api.Service.UserService;
+import dv027api.Util.JWTUtil;
+import dv027api.Model.User;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
+import java.util.Optional;
 
 @Controller
 public class UserMutation {
   private UserRepository userRepository;
   private UserService userService;
+  private JWTUtil jwtUtil;
   private boolean success = false;
 
-  public UserMutation (UserRepository userRepository, UserService userService) {
+  public UserMutation (UserRepository userRepository, UserService userService, JWTUtil jwtUtil) {
     this.userRepository = userRepository;
     this.userService = userService;
+    this.jwtUtil = jwtUtil;
   }
 
   @MutationMapping
@@ -34,7 +39,12 @@ public class UserMutation {
     if (success == false) {
       return "Wrong credentials, please try again or register a new account!";
     } else {
-      return "Success! You're logged in.";
+      return userRepository.findByUsername(username)
+      .map(user -> {
+          String token = jwtUtil.generateToken(user.getUsername(), user.getId());
+          return "Success! You're logged in. Here is your JWT: " + token;
+      })
+      .orElse("Something went wrong!");
     }
     
     

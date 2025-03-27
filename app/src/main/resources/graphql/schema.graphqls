@@ -1,13 +1,20 @@
 type Query {
   allBooks: [Book]
+  getBookByIsbn(isbn13: String!): Book
 }
 
 type Mutation {
+  # DATABASE MUTATIONS
   seedBooks: String
   clearBooks: String
 
+  # BOOK MUTATIONS
+  # should there be any?
+
+  # USER MUTATIONS
   registerUser(username: String!, password: String!): UserResponse
   loginUser(username: String!, password: String!): UserResponse
+  updateFavoriteBook(username: String!, isbn13: String!): User
 }
 
 type Book {
@@ -21,4 +28,10 @@ type UserResponse {
   success: Boolean
   message: String
   token: String
+}
+
+type User {
+  id: ID!
+  username: String!
+  favoriteBook: Book
 }

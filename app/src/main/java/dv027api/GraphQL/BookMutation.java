@@ -9,8 +9,8 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 
 @Controller
 public class BookMutation {
-  private final SeedBooksService seedBooksService;
-  private final BookRepository bookRepository;
+  private SeedBooksService seedBooksService;
+  private BookRepository bookRepository;
 
   public BookMutation(SeedBooksService seedBooksService, BookRepository bookRepository) {
     this.seedBooksService = seedBooksService;

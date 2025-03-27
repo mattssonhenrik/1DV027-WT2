@@ -11,6 +11,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 public class UserMutation {
   private UserRepository userRepository;
   private UserService userService;
+  private boolean success = false;
 
   public UserMutation (UserRepository userRepository, UserService userService) {
     this.userRepository = userRepository;
@@ -18,12 +19,24 @@ public class UserMutation {
   }
 
   @MutationMapping
-  public Boolean registerUser(@Argument String username, @Argument String password){
-    return userService.registerUser(username, password);
+  public String registerUser(@Argument String username, @Argument String password){
+    success = userService.registerUser(username, password);
+    if (success == false) {
+      return "Username is occupied, try again with other credentials";
+    } else {
+      return "Success! You've registered a new user " + username + ".";
+    }
   }
 
   @MutationMapping
-  public Boolean loginUser(String username, String password) {
-    return true;
+  public String loginUser(@Argument String username, @Argument String password){
+    success = userService.loginUser(username, password);
+    if (success == false) {
+      return "Wrong credentials, please try again or register a new account!";
+    } else {
+      return "Success! You're logged in.";
+    }
+    
+    
   }
 }

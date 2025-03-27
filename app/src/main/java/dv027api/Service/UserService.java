@@ -25,4 +25,10 @@ public class UserService {
     userRepository.save(newUser);
     return true;
   }
+
+  public Boolean loginUser (String username, String password) {
+    return userRepository.findByUsername(username)
+    .map(user -> bCryptPasswordEncoder.matches(password, user.getPassword()))
+    .orElse(false);
+  }
 }

@@ -6,8 +6,8 @@ type Mutation {
   seedBooks: String
   clearBooks: String
 
-  registerUser(username: String!, password: String!): Boolean
-  loginUser(username: String!, password: String!): Boolean
+  registerUser(username: String!, password: String!): String
+  loginUser(username: String!, password: String!): String
 }
 
 type Book {

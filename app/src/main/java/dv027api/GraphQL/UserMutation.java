@@ -2,13 +2,12 @@ package dv027api.GraphQL;
 
 import dv027api.Repository.UserRepository;
 import dv027api.Service.UserService;
+import dv027api.DTO.UserResponse;
 import dv027api.Util.JWTUtil;
-import dv027api.Model.User;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
-import java.util.Optional;
 
 @Controller
 public class UserMutation {
@@ -24,29 +23,26 @@ public class UserMutation {
   }
 
   @MutationMapping
-  public String registerUser(@Argument String username, @Argument String password){
+  public UserResponse registerUser(@Argument String username, @Argument String password){
     success = userService.registerUser(username, password);
     if (success == false) {
-      return "Username is occupied, try again with other credentials";
+      return new UserResponse(false, "Username is occupied, choose another username.", null);
     } else {
-      return "Success! You've registered a new user " + username + ".";
+      return new UserResponse(true, "Registration successful!", null);
     }
   }
 
   @MutationMapping
-  public String loginUser(@Argument String username, @Argument String password){
+  public UserResponse loginUser(@Argument String username, @Argument String password){
     success = userService.loginUser(username, password);
-    if (success == false) {
-      return "Wrong credentials, please try again or register a new account!";
-    } else {
-      return userRepository.findByUsername(username)
-      .map(user -> {
-          String token = jwtUtil.generateToken(user.getUsername(), user.getId());
-          return "Success! You're logged in. Here is your JWT: " + token;
-      })
-      .orElse("Something went wrong!");
+    if (!success) {
+      return new UserResponse(false, "Wrong credentials, please try again or register a new account!", null);
     }
-    
-    
+    return userRepository.findByUsername(username)
+      .map(user -> {
+        String token = jwtUtil.generateToken(user.getUsername(), user.getId());
+        return new UserResponse(true, "Login successful!", token);
+      })
+      .orElse(new UserResponse(false, "Something went wrong!", null));
+    }    
   }
-}

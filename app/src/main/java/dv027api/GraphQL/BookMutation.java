@@ -2,6 +2,7 @@ package dv027api.GraphQL;
 
 import dv027api.Repository.BookRepository;
 import dv027api.Service.SeedBooksService;
+import dv027api.Model.Book;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -18,13 +19,18 @@ public class BookMutation {
   }
 
   @MutationMapping
-  public String seedBooks() {
-    return seedBooksService.seedBooks();
+  public Book addBook(String isbn13, String title, String author, double rating) {
+    bookRepository.save(Book newBook = new Book(isbn13, title, author, rating));
   }
 
   @MutationMapping
-  public String clearBooks() {
-    bookRepository.deleteAll();
-    return "Books cleared.";
+  public Book updateBook() {
+    
   }
+
+  @MutationMapping
+  public boolean deleteBook() {
+    
+  }
+
 }

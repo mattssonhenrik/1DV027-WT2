@@ -14,7 +14,9 @@ type Mutation {
   clearBooks: String
 
   # - BOOK MUTATIONS #
-  # should there be any?
+  addBook(isbn13: String!, title: String!, author: String!, rating: Float!): Book
+  updateBook(isbn13: String!, title: String, author: String, rating: Float): Book
+  deleteBook(isbn13: String!): Boolean
 
   # - USER MUTATIONS #
   registerUser(username: String!, password: String!): UserResponse

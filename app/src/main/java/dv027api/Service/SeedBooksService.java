@@ -70,4 +70,9 @@ public class SeedBooksService {
     inserted = 0;
     return "Seeded success";
   }
+
+  public String clearAllBooks() {
+    bookRepository.deleteAll();
+    return "Book cleared.";
+  }
 }

@@ -22,7 +22,7 @@ public class User {
   @Column(nullable = false)
   private String password;
   @ManyToOne
-  @JoinColumn(name = "favorite_isbn13")
+  @JoinColumn(name = "favorite_isbn13") // Setting this as a forgein key (primary key book)
   private Book favoriteBook;
 
   // A default constructor which we need for JPA to work

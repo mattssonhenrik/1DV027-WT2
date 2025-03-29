@@ -1,20 +1,26 @@
 type Query {
+  # - USER QUERIES #
+  allUsers: [User]
+  getUserByUsername(username: String!): User
+
+  # - BOOK QUERIES #
   allBooks: [Book]
   getBookByIsbn(isbn13: String!): Book
 }
 
 type Mutation {
-  # DATABASE MUTATIONS
+  # - DATABASE MUTATIONS #
   seedBooks: String
   clearBooks: String
 
-  # BOOK MUTATIONS
+  # - BOOK MUTATIONS #
   # should there be any?
 
-  # USER MUTATIONS
+  # - USER MUTATIONS #
   registerUser(username: String!, password: String!): UserResponse
   loginUser(username: String!, password: String!): UserResponse
-  updateFavoriteBook(username: String!, isbn13: String!): User
+  addOrUpdateFavoriteBook(username: String!, isbn13: String!): User
+  removeFavoriteBook(username: String!): User
 }
 
 type Book {

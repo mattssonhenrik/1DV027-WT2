@@ -54,15 +54,23 @@ public class UserMutation {
         .orElse(new UserResponse(false, "Something went wrong!", null));
   }
 
-  // FAVOURITE BOOK CREATE OR UPDATE
+  // FAVORITE BOOK CREATE OR UPDATE
   @MutationMapping
-  public User updateFavoriteBook(@Argument String username, @Argument String isbn13) {
+  public User addOrUpdateFavoriteBook(@Argument String username, @Argument String isbn13) {
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new RuntimeException("User not found"));
     Book book = bookRepository.findById(isbn13)
         .orElseThrow(() -> new RuntimeException("Book not found"));
-
     user.setFavoriteBook(book);
+    return userRepository.save(user);
+  }
+
+  // FAVORITE BOOK DELETE
+  @MutationMapping
+  public User removeFavoriteBook(@Argument String username) {
+    User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new RuntimeException("User not found"));
+    user.setFavoriteBook(null);
     return userRepository.save(user);
   }
 }

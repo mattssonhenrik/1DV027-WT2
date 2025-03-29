@@ -8,5 +8,5 @@ public interface BookService {
   Book getOneBookByIsbn(String isbn13);
   Book addBook(String isbn13, String title, String author, double rating);
   Book updateBook(String isbn13, String title, String author, double rating);
-  boolean deleteBook(String isbn13);
+  boolean deleteBookByIsbn(String isbn13);
 }

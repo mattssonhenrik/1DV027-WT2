@@ -44,7 +44,7 @@ public class BookServiceImplementation implements BookService {
   }
 
   @Override 
-  public boolean deleteBook(String isbn13) {
+  public boolean deleteBookByIsbn(String isbn13) {
     if (!bookRepository.existsById(isbn13)) return false;
     bookRepository.deleteById(isbn13);
     return true;

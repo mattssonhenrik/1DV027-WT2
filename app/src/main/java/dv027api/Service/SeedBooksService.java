@@ -1,11 +1,14 @@
 package dv027api.Service;
 
 import dv027api.Model.Book;
+import dv027api.Model.User;
 import dv027api.Repository.BookRepository;
+import dv027api.Repository.UserRepository;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 import com.opencsv.CSVReader;
@@ -13,10 +16,12 @@ import com.opencsv.CSVReader;
 @Service
 public class SeedBooksService {
   private BookRepository bookRepository;
+  private UserRepository userRepository;
   private int inserted;
 
-  public SeedBooksService(BookRepository bookRepository) {
+  public SeedBooksService(BookRepository bookRepository, UserRepository userRepository) {
     this.bookRepository = bookRepository;
+    this.userRepository = userRepository;
   }
 
   public String seedBooks() {
@@ -72,6 +77,11 @@ public class SeedBooksService {
   }
 
   public String clearAllBooks() {
+    List<User> users = userRepository.findAll();
+    for (User user : users) {
+      user.setFavoriteBook(null);
+    }
+    userRepository.saveAll(users);
     bookRepository.deleteAll();
     return "Book cleared.";
   }

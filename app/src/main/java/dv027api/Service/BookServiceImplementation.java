@@ -28,7 +28,7 @@ public class BookServiceImplementation implements BookService {
 
   @Override 
   public Book addBook(String isbn13, String title, String author, double rating) {
-    Book newBook = new Book(isbn13, title, author, rating)
+    Book newBook = new Book(isbn13, title, author, rating);
     bookRepository.save(newBook);
     return newBook;
   }

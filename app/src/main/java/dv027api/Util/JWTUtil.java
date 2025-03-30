@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class JWTUtil {
 
   private SecretKey key;
-  private Long expirationMillis; // This is long becaues if we (not plausible) want to set it to more than 24
+  private Long expirationMillis; // This is long becaues if we (not likely) want to set it to more than 24
                                  // days.
 
   public JWTUtil(@Value("${jwt.secret}") String secret,

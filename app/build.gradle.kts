@@ -21,6 +21,7 @@ dependencies {
     // Spring Boot + GraphQL
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-graphql")
+    implementation("org.springframework.graphql:spring-graphql:1.2.0")
 
     // Bugfinder, disclosing endpoints
     implementation("org.springframework.boot:spring-boot-starter-actuator")

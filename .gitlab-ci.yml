@@ -2,6 +2,15 @@ stages:
   - build
   - integration-test
 
+services:
+  - name: postgres:16
+    alias: db
+
+variables:
+  POSTGRES_DB: books_database
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: lassokastning
+
 build:
   stage: build
   image: gradle:8.5-jdk17
@@ -16,14 +25,16 @@ integration-test:
     - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
     - apt-get install -y nodejs
   script:
-    - echo 'DB_URL=jdbc:postgresql://localhost:5432/books_database' >> app/.env
+    - echo 'DB_URL=jdbc:postgresql://db:5432/books_database' >> app/.env
     - echo 'DB_USER=postgres' >> app/.env
     - echo 'DB_PASSWORD=lassokastning' >> app/.env
     - echo 'JWT_SECRET=C3UE0DCjvlu1Do0T/yeEJPEMgIplHVlacNtxCh5bqxk=' >> app/.env
+
     - ./gradlew bootRun &
+
     - echo "Waiting for server to be ready..."
     - until curl -s http://localhost:8080/graphql > /dev/null; do echo "Still waiting..."; sleep 2; done
     - echo "Server is up!"
+
     - npm install -g newman
     - newman run 1dv027-API.postman_collection.json
-    #Putting the .env in this file (I KNOW WE SHOULD NOT DO THIS) since I am not maintainer and cannot set the env variables in the settings.

@@ -8,9 +8,11 @@ build:
   script:
     - ./gradlew clean build
 
-test:
+integration-test:
   stage: test
-  image: node:18
+  image: gradle:8.5-jdk17
   script:
+    - ./gradlew bootRun &              
+    - sleep 15                          
     - npm install -g newman
     - newman run 1dv027-API.postman_collection.json

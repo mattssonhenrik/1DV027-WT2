@@ -1,8 +1,16 @@
 stages:
   - build
+  - test
 
 build:
   stage: build
   image: gradle:8.5-jdk17
   script:
-    - ./gradlew build
+    - ./gradlew clean build
+
+test:
+  stage: test
+  image: node:18
+  script:
+    - npm install -g newman
+    - newman run your-collection.postman_collection.json

@@ -13,4 +13,4 @@ test:
   image: node:18
   script:
     - npm install -g newman
-    - newman run your-collection.postman_collection.json
+    - newman run 1dv027-API.postman_collection.json

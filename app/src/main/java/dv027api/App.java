@@ -9,24 +9,36 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import org.springframework.context.ApplicationContext; // REmove after testing app-class
 
+/**
+ * Entry point for the Spring Boot application.
+ * Loads environment variables and starts the app.
+ */
 @SpringBootApplication
 public class App {
 
+    /**
+     * Initializes environment variables and launches the Spring application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.configure()
-        .directory(System.getProperty("user.dir"))
-        .filename(".env")
-        .load();
+                .directory(System.getProperty("user.dir"))
+                .filename(".env")
+                .load();
         System.setProperty("DB_URL", dotenv.get("DB_URL"));
         System.setProperty("DB_USER", dotenv.get("DB_USER"));
         System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
         System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
 
-        ApplicationContext context =SpringApplication.run(App.class, args);
+        ApplicationContext context = SpringApplication.run(App.class, args);
         App app = context.getBean(App.class);
         app.greeting();
     }
 
+    /**
+     * Simple startup message for verification.
+     */
     public void greeting() {
         System.out.println("Hi from App-class!");
     }

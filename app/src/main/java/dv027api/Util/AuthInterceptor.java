@@ -12,12 +12,24 @@ import reactor.core.publisher.Mono;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 
+/**
+ * Intercepts GraphQL requests and applies JWT-based authentication
+ * for mutations that modify book data (add, update, delete).
+ */
 @Component
 public class AuthInterceptor implements WebGraphQlInterceptor {
 
   @Autowired
   private JWTUtil jwtUtil;
 
+  /**
+   * Intercepts incoming GraphQL requests. Only enforces JWT validation
+   * for sensitive mutations: addBook, updateBook, deleteBook.
+   *
+   * @param request the incoming GraphQL request
+   * @param chain   the request processing chain
+   * @return a Mono that either proceeds or throws an error if JWT is invalid
+   */
   @Override
   public Mono<WebGraphQlResponse> intercept(WebGraphQlRequest request, Chain chain) {
     String document = request.getDocument();

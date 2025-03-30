@@ -13,17 +13,32 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import com.opencsv.CSVReader;
 
+/**
+ * Service for seeding and clearing the books table using a CSV file.
+ */
 @Service
 public class SeedBooksService {
   private BookRepository bookRepository;
   private UserRepository userRepository;
   private int inserted;
 
+  /**
+   * Constructs the service with the required repositories.
+   *
+   * @param bookRepository the book repository
+   * @param userRepository the user repository
+   */
   public SeedBooksService(BookRepository bookRepository, UserRepository userRepository) {
     this.bookRepository = bookRepository;
     this.userRepository = userRepository;
   }
 
+  /**
+   * Seeds the books table using data from <code>resources/data/books.csv</code>.
+   * Skips duplicates and malformed entries.
+   *
+   * @return a message indicating success or failure
+   */
   public String seedBooks() {
     if (bookRepository.count() > 0) {
       System.out.println("Books table is already seeded");

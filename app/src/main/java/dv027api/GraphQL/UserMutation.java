@@ -12,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 
+/**
+ * GraphQL mutation controller for user-related operations such as registration,
+ * login, and managing favorite books.
+ */
 @Controller
 public class UserMutation {
   private UserRepository userRepository;
@@ -20,6 +24,14 @@ public class UserMutation {
   private JWTUtil jwtUtil;
   private boolean success = false;
 
+  /**
+   * Constructs a UserMutation controller with all necessary dependencies.
+   *
+   * @param userRepository handles DB operations for users
+   * @param bookRepository handles DB operations for books
+   * @param userService    handles registration and login logic
+   * @param jwtUtil        generates JWTs for authenticated users
+   */
   public UserMutation(UserRepository userRepository, BookRepository bookRepository, UserService userService,
       JWTUtil jwtUtil) {
     this.userRepository = userRepository;
@@ -28,7 +40,13 @@ public class UserMutation {
     this.jwtUtil = jwtUtil;
   }
 
-  // REGISTER
+  /**
+   * Registers a new user.
+   *
+   * @param username desired username
+   * @param password desired password
+   * @return UserResponse with success flag and message
+   */
   @MutationMapping
   public UserResponse registerUser(@Argument String username, @Argument String password) {
     success = userService.registerUser(username, password);
@@ -39,7 +57,13 @@ public class UserMutation {
     }
   }
 
-  // LOGIN
+  /**
+   * Logs in a user and returns a JWT if credentials are valid.
+   *
+   * @param username the username
+   * @param password the password
+   * @return UserResponse with JWT if login is successful
+   */
   @MutationMapping
   public UserResponse loginUser(@Argument String username, @Argument String password) {
     success = userService.loginUser(username, password);
@@ -54,7 +78,13 @@ public class UserMutation {
         .orElse(new UserResponse(false, "Something went wrong!", null));
   }
 
-  // FAVORITE BOOK CREATE OR UPDATE
+  /**
+   * Sets or updates the favorite book of a user.
+   *
+   * @param username the user's username
+   * @param isbn13   the book's ISBN-13
+   * @return the updated User object
+   */
   @MutationMapping
   public User addOrUpdateFavoriteBook(@Argument String username, @Argument String isbn13) {
     User user = userRepository.findByUsername(username)
@@ -65,7 +95,12 @@ public class UserMutation {
     return userRepository.save(user);
   }
 
-  // FAVORITE BOOK DELETE
+  /**
+   * Removes the favorite book from a user.
+   *
+   * @param username the user's username
+   * @return the updated User object with no favorite book
+   */
   @MutationMapping
   public User removeFavoriteBook(@Argument String username) {
     User user = userRepository.findByUsername(username)

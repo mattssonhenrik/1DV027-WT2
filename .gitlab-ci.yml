@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  - integration-test
 
 build:
   stage: build
@@ -9,9 +9,15 @@ build:
     - ./gradlew clean build
 
 integration-test:
-  stage: test
-  image: node:18
+  stage: integration-test
+  image: gradle:8.5-jdk17
+  before_script:
+    - apt-get update
+    - apt-get install -y curl
+    - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+    - apt-get install -y nodejs
   script:
-    - sleep 15                          
+    - ./gradlew bootRun &
+    - sleep 15
     - npm install -g newman
     - newman run 1dv027-API.postman_collection.json

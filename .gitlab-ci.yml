@@ -12,12 +12,13 @@ integration-test:
   stage: integration-test
   image: gradle:8.5-jdk17
   before_script:
-    - apt-get update
-    - apt-get install -y curl
+    - apt-get update && apt-get install -y curl ca-certificates gnupg
     - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
     - apt-get install -y nodejs
   script:
     - ./gradlew bootRun &
-    - sleep 15
+    - echo "Waiting for server to be ready..."
+    - until curl -s http://localhost:8080/graphql > /dev/null; do echo "Still waiting..."; sleep 2; done
+    - echo "Server is up!"
     - npm install -g newman
     - newman run 1dv027-API.postman_collection.json

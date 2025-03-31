@@ -10,181 +10,42 @@
 			"name": "users",
 			"item": [
 				{
-					"name": "Query [USER]",
+					"name": "Database",
 					"item": [
 						{
-							"name": "Get all favorite books from users (allBooks, getFavoriteBook)",
+							"name": "Clear database (clearBooks)",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"pm.test(\"Response status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
+											"  pm.expect(pm.response.code).to.equal(200);",
 											"});",
 											"",
 											"",
-											"pm.test(\"Content-Type is application/json\", function () {",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"AllUsers array is present and contains at least one element\", function () {",
-											"  const responseData = pm.response.json();",
-											"  ",
-											"  pm.expect(responseData).to.be.an('object');",
-											"  pm.expect(responseData.data.allUsers).to.exist.and.to.be.an('array').that.is.not.empty;",
-											"});",
-											"",
-											"",
-											"pm.test(\"Username must be a non-empty string\", function () {",
+											"pm.test(\"Response has the required 'data' field\", function () {",
 											"    const responseData = pm.response.json();",
 											"    ",
-											"    pm.expect(responseData).to.be.an('object');",
-											"    pm.expect(responseData.data.allUsers).to.be.an('array');",
-											"    ",
-											"    responseData.data.allUsers.forEach(function(user) {",
-											"        pm.expect(user.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
-											"    });",
+											"    pm.expect(responseData).to.have.property('data');",
 											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "{\r\n  allUsers {\r\n    username\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}\r\n",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get all users (allUsers)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
+											"",
+											"",
+											"pm.test(\"ClearBooks field is present in the response\", function () {",
+											"  const responseData = pm.response.json();",
+											"  pm.expect(responseData.data.clearBooks).to.exist;",
+											"});",
+											"",
+											"",
+											"pm.test(\"ClearBooks value should not be null or empty\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData.data.clearBooks).to.not.be.null.and.to.not.be.empty;",
 											"});",
 											"",
 											"",
 											"pm.test(\"Content-Type header is application/json\", function () {",
 											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"AllUsers array should exist and be an array\", function () {",
-											"    const responseData = pm.response.json();",
-											"    ",
-											"    pm.expect(responseData).to.be.an('object');",
-											"    pm.expect(responseData.data.allUsers).to.be.an('array');",
-											"});",
-											"",
-											"",
-											"pm.test(\"Username and id must be non-empty strings\", function () {",
-											"  const responseData = pm.response.json();",
-											"  ",
-											"  pm.expect(responseData).to.be.an('object');",
-											"  pm.expect(responseData.data.allUsers).to.be.an('array');",
-											"",
-											"  responseData.data.allUsers.forEach(user => {",
-											"    pm.expect(user.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
-											"    pm.expect(user.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should not be empty\");",
-											"  });",
-											"});",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "{\r\n  allUsers {\r\n    username\r\n    id\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}\r\n",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get user by username (getUserByUsername)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 200\", function () {",
-											"  pm.response.to.have.status(200);",
-											"});",
-											"",
-											"",
-											"pm.test(\"Content-Type is application/json\", function () {",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"Errors array is present and contains at least one element\", function () {",
-											"  const responseData = pm.response.json();",
-											"  ",
-											"  pm.expect(responseData).to.be.an('object');",
-											"  pm.expect(responseData.errors).to.exist.and.to.be.an('array').with.lengthOf.at.least(1);",
-											"});",
-											"",
-											"",
-											"pm.test(\"Data object should exist and be of type object\", function () {",
-											"  const responseData = pm.response.json();",
-											"  ",
-											"  pm.expect(responseData).to.be.an('object');",
-											"  pm.expect(responseData.data).to.exist.and.to.be.an('object');",
-											"});",
-											"",
-											"",
-											"pm.test(\"Message in errors array is a non-empty string\", function () {",
-											"    const responseData = pm.response.json();",
-											"    ",
-											"    pm.expect(responseData.errors).to.be.an('array').that.is.not.empty;",
-											"    responseData.errors.forEach(function(error) {",
-											"        pm.expect(error.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");",
-											"    });",
 											"});"
 										],
 										"type": "text/javascript"
@@ -197,7 +58,74 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "{\r\n  getUserByUsername(username: \"henrik1\") {\r\n    username\r\n    id\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}",
+										"query": "mutation {\r\n  clearBooks\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/graphql",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Populate database (seedBooks)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response has the required 'data' field\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData).to.have.property('data');",
+											"});",
+											"",
+											"",
+											"pm.test(\"SeedBooks field is present in the response data\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.have.property('data');",
+											"  pm.expect(responseData.data).to.have.property('seedBooks');",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"SeedBooks field should not be empty\", function () {",
+											"  const responseData = pm.response.json();",
+											"  ",
+											"  pm.expect(responseData).to.be.an('object');",
+											"  pm.expect(responseData.data.seedBooks).to.exist.and.to.not.be.empty;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation {\r\n  seedBooks\r\n}\r\n",
 										"variables": ""
 									}
 								},
@@ -261,7 +189,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"query\": \"mutation { registerUser(username: \\\"{{randomUsername}}\\\", password: \\\"{{randomPassword}}\\\") { success message }  }\"\r\n}",
+									"raw": "{\r\n  \"query\": \"mutation { registerUser(username: \\\"{{randomUsername}}\\\", password: \\\"{{randomPassword}}\\\") { success message } }\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -296,9 +224,11 @@
 											"pm.test(\"Login was successful\", function () {\r",
 											"  const json = pm.response.json();\r",
 											"  pm.expect(json.data.loginUser.success).to.eql(true);\r",
+											"  pm.environment.set(\"jwt\", json.data.loginUser.token);\r",
 											"});\r",
 											"\r",
-											"pm.environment.set(\"jwt\", pm.response.json().data.loginUser.token);\r",
+											"\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript",
@@ -437,8 +367,361 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Add favorite book of user (updateFavoriteBook)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"const res = pm.response.json();",
+											"",
+											"pm.test(\"Username is non-empty and matches stored value\", function () {",
+											"    pm.expect(res.data.addOrUpdateFavoriteBook.username).to.eql(pm.environment.get(\"favoriteUser\"));",
+											"});",
+											"",
+											"pm.test(\"Favorite book title and author are non-empty strings\", function () {",
+											"    pm.expect(res.data.addOrUpdateFavoriteBook.favoriteBook.title).to.be.a('string').and.not.empty;",
+											"    pm.expect(res.data.addOrUpdateFavoriteBook.favoriteBook.author).to.be.a('string').and.not.empty;",
+											"});",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"const username = pm.environment.get(\"randomUsername\");\r",
+											"\r",
+											"pm.environment.set(\"favoriteIsbn\", \"9780451205360\");\r",
+											"pm.environment.set(\"favoriteUser\", username);\r",
+											"\r",
+											"console.log(\"Setting favorite book for:\", username);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"query\": \"mutation { addOrUpdateFavoriteBook(username: \\\"{{favoriteUser}}\\\", isbn13: \\\"{{favoriteIsbn}}\\\") { username favoriteBook { title author } } }\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/graphql",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove favorite book of user (removeFavoriteBook)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Data object is present and has the expected structure\", function () {",
+											"    const responseData = pm.response.json();",
+											"",
+											"    pm.expect(responseData).to.be.an('object');",
+											"    pm.expect(responseData.data).to.exist.and.to.be.an('object');",
+											"    pm.expect(responseData.data.removeFavoriteBook).to.exist.and.to.be.an('object');",
+											"    pm.expect(responseData.data.removeFavoriteBook.username).to.be.a('string');",
+											"    pm.expect(responseData.data.removeFavoriteBook.favoriteBook).to.be.null;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Username is a non-empty string\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.data.removeFavoriteBook.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+											"});",
+											"",
+											"",
+											"pm.test(\"Favorite book should be null\", function () {",
+											"    const responseData = pm.response.json();",
+											"    ",
+											"    pm.expect(responseData.data.removeFavoriteBook.favoriteBook).to.be.null;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.environment.set(\"favoriteUser\", pm.environment.get(\"randomUsername\"));"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"query\": \"mutation { removeFavoriteBook(username: \\\"{{favoriteUser}}\\\") { username favoriteBook { title author } } }\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/graphql",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Query [USER]",
+			"item": [
+				{
+					"name": "Get all favorite books from users (allBooks, getFavoriteBook)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"AllUsers array is present and contains at least one element\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.data.allUsers).to.exist.and.to.be.an('array').that.is.not.empty;",
+									"});",
+									"",
+									"",
+									"pm.test(\"Username must be a non-empty string\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data.allUsers).to.be.an('array');",
+									"    ",
+									"    responseData.data.allUsers.forEach(function(user) {",
+									"        pm.expect(user.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  allUsers {\r\n    username\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users (allUsers)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"Content-Type header is application/json\", function () {",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+									"});",
+									"",
+									"",
+									"pm.test(\"AllUsers array should exist and be an array\", function () {",
+									"    const responseData = pm.response.json();",
+									"    ",
+									"    pm.expect(responseData).to.be.an('object');",
+									"    pm.expect(responseData.data.allUsers).to.be.an('array');",
+									"});",
+									"",
+									"",
+									"pm.test(\"Username and id must be non-empty strings\", function () {",
+									"  const responseData = pm.response.json();",
+									"  ",
+									"  pm.expect(responseData).to.be.an('object');",
+									"  pm.expect(responseData.data.allUsers).to.be.an('array');",
+									"",
+									"  responseData.data.allUsers.forEach(user => {",
+									"    pm.expect(user.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
+									"    pm.expect(user.id).to.be.a('string').and.to.have.lengthOf.at.least(1, \"ID should not be empty\");",
+									"  });",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  allUsers {\r\n    username\r\n    id\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by username (getUserByUsername)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Data object should exist and be of type object\", function () {\r",
+									"  const json = pm.response.json();\r",
+									"  pm.expect(json).to.be.an('object');\r",
+									"  pm.expect(json.data.getUserByUsername).to.be.an('object');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Username and id must be non-empty strings\", function () {\r",
+									"  const user = pm.response.json().data.getUserByUsername;\r",
+									"  pm.expect(user.username).to.be.a('string').and.to.have.length.above(0);\r",
+									"  pm.expect(user.id).to.be.a('string').and.to.have.length.above(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"FavoriteBook is either null or has valid title and author\", function () {\r",
+									"  const book = pm.response.json().data.getUserByUsername.favoriteBook;\r",
+									"  if (book !== null) {\r",
+									"    pm.expect(book.title).to.be.a('string').and.to.have.length.above(0);\r",
+									"    pm.expect(book.author).to.be.a('string').and.to.have.length.above(0);\r",
+									"  }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\r\n  getUserByUsername(username: \"{{randomUsername}}\") {\r\n    username\r\n    id\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}\r\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -459,6 +742,10 @@
 											"  pm.response.to.have.status(200);",
 											"});",
 											"",
+											"pm.test(\"AllBooks array should contain at least one book\", function () {",
+											"    const books = pm.response.json().data.allBooks;",
+											"    pm.expect(books.length).to.be.above(0);",
+											"});",
 											"",
 											"pm.test(\"Content type is application/json\", function () {",
 											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
@@ -487,6 +774,13 @@
 										],
 										"type": "text/javascript",
 										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -551,9 +845,27 @@
 											"  ",
 											"  pm.expect(responseData).to.be.an('object');",
 											"  pm.expect(responseData.data.getBookByIsbn.author).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Author should not be empty\");",
+											"});",
+											"",
+											"pm.test(\"Title and rating should be valid\", function () {",
+											"  const book = pm.response.json().data.getBookByIsbn;",
+											"  ",
+											"  pm.expect(book.title).to.be.a('string').and.to.not.be.empty;",
+											"  pm.expect(book.rating).to.be.a('number');",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -563,7 +875,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query {\r\n  getBookByIsbn(isbn13: \"9780451205360\") {\r\n    isbn13\r\n    title\r\n    author\r\n    rating\r\n  }\r\n}\r\n",
+										"query": "query {\r\n  getBookByIsbn(isbn13: \"{{favoriteIsbn}}\") {\r\n    isbn13\r\n    title\r\n    author\r\n    rating\r\n  }\r\n}",
 										"variables": ""
 									}
 								},
@@ -610,29 +922,23 @@
 											"});",
 											"",
 											"",
-											"pm.test(\"Title is a non-empty string\", function () {",
-											"  const responseData = pm.response.json();",
-											"  ",
-											"  pm.expect(responseData).to.be.an('object');",
-											"  pm.expect(responseData.data.allBooks).to.be.an('array');",
-											"  ",
-											"  responseData.data.allBooks.forEach(function(book) {",
-											"    pm.expect(book.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Title should not be empty\");",
-											"  });",
-											"});",
+											"pm.test(\"Books have valid title and rating\", function () {",
+											"  const books = pm.response.json().data.allBooks;",
 											"",
-											"",
-											"pm.test(\"Rating is a non-negative integer\", function () {",
-											"  const responseData = pm.response.json();",
-											"",
-											"  pm.expect(responseData).to.have.property('data');",
-											"  pm.expect(responseData.data).to.have.property('allBooks').that.is.an('array');",
-											"",
-											"  responseData.data.allBooks.forEach(function(book) {",
-											"    pm.expect(book).to.have.property('rating').that.is.a('number').and.to.be.at.least(0, \"Rating should be a non-negative integer\");",
+											"  books.forEach(book => {",
+											"    pm.expect(book.title).to.be.a('string').and.to.have.length.above(0);",
+											"    pm.expect(book.rating).to.be.a('number').and.to.be.at.least(0);",
 											"  });",
 											"});"
 										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
 										"type": "text/javascript"
 									}
 								}
@@ -703,6 +1009,14 @@
 											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
 											"});"
 										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"packages": {},
 										"type": "text/javascript"
 									}
 								}
@@ -713,7 +1027,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query {\r\n  getBookByIsbn(isbn13: \"9780451205360\") {\r\n    title\r\n    rating\r\n  }\r\n}\r\n",
+										"query": "query {\r\n  getBookByIsbn(isbn13: \"{{favoriteIsbn}}\") {\r\n    title\r\n    rating\r\n  }\r\n}",
 										"variables": ""
 									}
 								},
@@ -737,144 +1051,91 @@
 					"name": "Mutation [BOOK]",
 					"item": [
 						{
-							"name": "Add favorite book of user (updateFavoriteBook)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"",
-											"pm.test(\"Data object should exist and be an object\", function () {",
-											"    const responseData = pm.response.json();",
-											"    ",
-											"    pm.expect(responseData).to.be.an('object');",
-											"    pm.expect(responseData.data).to.exist.and.to.be.an('object');",
-											"});",
-											"",
-											"",
-											"pm.test(\"Username is a non-empty string\", function () {",
-											"    const responseData = pm.response.json();",
-											"    ",
-											"    pm.expect(responseData.data.addOrUpdateFavoriteBook.username).to.be.a('string').and.to.have.length.above(0, \"Username should not be empty\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"Title and author are non-empty strings\", function () {",
-											"  const responseData = pm.response.json();",
-											"  ",
-											"  pm.expect(responseData).to.be.an('object');",
-											"  pm.expect(responseData.data.addOrUpdateFavoriteBook.favoriteBook.title).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
-											"  pm.expect(responseData.data.addOrUpdateFavoriteBook.favoriteBook.author).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"Content-Type header is application/json\", function () {",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation {\r\n  addOrUpdateFavoriteBook(username: \"henrik2\", isbn13: \"9780451205360\") {\r\n    username\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Remove favorite book of user (removeFavoriteBook)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											"",
-											"",
-											"pm.test(\"Content-Type header is application/json\", function () {",
-											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"Data object is present and has the expected structure\", function () {",
-											"    const responseData = pm.response.json();",
-											"",
-											"    pm.expect(responseData).to.be.an('object');",
-											"    pm.expect(responseData.data).to.exist.and.to.be.an('object');",
-											"    pm.expect(responseData.data.removeFavoriteBook).to.exist.and.to.be.an('object');",
-											"    pm.expect(responseData.data.removeFavoriteBook.username).to.be.a('string');",
-											"    pm.expect(responseData.data.removeFavoriteBook.favoriteBook).to.be.null;",
-											"});",
-											"",
-											"",
-											"pm.test(\"Username is a non-empty string\", function () {",
-											"    const responseData = pm.response.json();",
-											"    ",
-											"    pm.expect(responseData.data.removeFavoriteBook.username).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Username should not be empty\");",
-											"});",
-											"",
-											"",
-											"pm.test(\"Favorite book should be null\", function () {",
-											"    const responseData = pm.response.json();",
-											"    ",
-											"    pm.expect(responseData.data.removeFavoriteBook.favoriteBook).to.be.null;",
-											"});"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation {\r\n  removeFavoriteBook(username: \"henrik2\") {\r\n    username\r\n    favoriteBook {\r\n      title\r\n      author\r\n    }\r\n  }\r\n}",
-										"variables": ""
-									}
-								},
-								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Add a book (addBook)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Content-Type header is application/json\", function () {",
+											"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"pm.test(\"Response contains data and addBook object\", function () {",
+											"  const responseData = pm.response.json();",
+											"",
+											"  pm.expect(responseData).to.have.property('data');",
+											"  pm.expect(responseData.data).to.have.property('addBook');",
+											"  pm.expect(responseData.data.addBook).to.be.an('object');",
+											"});",
+											"",
+											"pm.test(\"Book fields are returned and valid\", function () {",
+											"  const book = pm.response.json().data.addBook;",
+											"",
+											"  pm.expect(book.isbn13).to.be.a('string').and.to.have.length.above(0);",
+											"  pm.expect(book.title).to.be.a('string').and.to.have.length.above(0);",
+											"  pm.expect(book.author).to.be.a('string').and.to.have.length.above(0);",
+											"  pm.expect(book.rating).to.be.a('number').and.to.be.at.least(0);",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt}}",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation {\r\n  addBook(\r\n    isbn13: \"1\",\r\n    title: \"HenriksBook\",\r\n    author: \"HenrikMattsson\",\r\n    rating: 5.0\r\n  ) {\r\n    isbn13\r\n    title\r\n    author\r\n    rating\r\n  }\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/graphql",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unauthorized - Add a book (addBook)",
 							"event": [
 								{
 									"listen": "test",
@@ -916,8 +1177,8 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJoZW5yaWsiLCJpYXQiOjE3NDMzMzg1MjYsImV4cCI6MTc0MzM0MjEyNn0.XVgQDhWMHyRAp1RvT4OKC0ncgCZnbfdgmspl19TPE8k",
+										"key": "",
+										"value": "",
 										"type": "text"
 									},
 									{
@@ -950,6 +1211,90 @@
 						},
 						{
 							"name": "Update a book (updateBook)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response has a data object\", function () {",
+											"    const responseData = pm.response.json();",
+											"    pm.expect(responseData).to.have.property('data').that.is.an('object');",
+											"});",
+											"",
+											"pm.test(\"updateBook field exists\", function () {",
+											"    const responseData = pm.response.json();",
+											"    pm.expect(responseData.data).to.have.property('updateBook').that.is.an('object');",
+											"});",
+											"",
+											"pm.test(\"Updated book has correct fields and values\", function () {",
+											"    const responseData = pm.response.json();",
+											"    const updatedBook = responseData.data.updateBook;",
+											"",
+											"    pm.expect(updatedBook.isbn13).to.eql(\"1\");  // or whatever value you sent",
+											"    pm.expect(updatedBook.title).to.eql(\"HenriksAbsoluteNEWESTbook\");",
+											"    pm.expect(updatedBook.author).to.eql(\"HenrikMattssonETAL\");",
+											"    pm.expect(updatedBook.rating).to.eql(10.0);",
+											"});",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											"",
+											"pm.environment.set(\"bookToDelete\", pm.response.json().data.updateBook.isbn13);",
+											"",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation {\r\n  updateBook(\r\n    isbn13: \"1\",\r\n    title: \"HenriksAbsoluteNEWESTbook\",\r\n    author: \"HenrikMattssonETAL\",\r\n    rating: 10.0\r\n  ) {\r\n    isbn13\r\n    title\r\n    author\r\n    rating\r\n  }\r\n}",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/graphql",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unauthorized - Update a book (updateBook) Copy",
 							"event": [
 								{
 									"listen": "test",
@@ -992,8 +1337,8 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJoZW5yaWsiLCJpYXQiOjE3NDMzMzg1MjYsImV4cCI6MTc0MzM0MjEyNn0.XVgQDhWMHyRAp1RvT4OKC0ncgCZnbfdgmspl19TPE8k",
+										"key": "",
+										"value": "",
 										"type": "text"
 									}
 								],
@@ -1020,6 +1365,73 @@
 						},
 						{
 							"name": "Delete a book (deleteBook)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Response data has deleteBook confirmation\", function () {",
+											"    const json = pm.response.json();",
+											"    pm.expect(json).to.have.property('data');",
+											"    pm.expect(json.data).to.have.property('deleteBook');",
+											"});",
+											"",
+											"pm.test(\"Content-Type is application/json\", function () {",
+											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
+											"});",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "graphql",
+									"graphql": {
+										"query": "mutation {\r\n  deleteBook(isbn13: \"{{bookToDelete}}\")\r\n}\r\n",
+										"variables": ""
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/graphql",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"graphql"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Unauthorized - Delete a book (deleteBook) Copy",
 							"event": [
 								{
 									"listen": "test",
@@ -1062,8 +1474,8 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Authorization",
-										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJoZW5yaWsiLCJpYXQiOjE3NDMzMzg1MjYsImV4cCI6MTc0MzM0MjEyNn0.XVgQDhWMHyRAp1RvT4OKC0ncgCZnbfdgmspl19TPE8k",
+										"key": "",
+										"value": "",
 										"type": "text"
 									}
 								],
@@ -1093,7 +1505,7 @@
 			]
 		},
 		{
-			"name": "Database",
+			"name": "Database Copy",
 			"item": [
 				{
 					"name": "Clear database (clearBooks)",
@@ -1142,73 +1554,6 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation {\r\n  clearBooks\r\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/graphql",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Populate database (seedBooks)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});",
-									"",
-									"",
-									"pm.test(\"Response has the required 'data' field\", function () {",
-									"    const responseData = pm.response.json();",
-									"    ",
-									"    pm.expect(responseData).to.have.property('data');",
-									"});",
-									"",
-									"",
-									"pm.test(\"SeedBooks field is present in the response data\", function () {",
-									"  const responseData = pm.response.json();",
-									"  ",
-									"  pm.expect(responseData).to.have.property('data');",
-									"  pm.expect(responseData.data).to.have.property('seedBooks');",
-									"});",
-									"",
-									"",
-									"pm.test(\"Content-Type header is application/json\", function () {",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-									"});",
-									"",
-									"",
-									"pm.test(\"SeedBooks field should not be empty\", function () {",
-									"  const responseData = pm.response.json();",
-									"  ",
-									"  pm.expect(responseData).to.be.an('object');",
-									"  pm.expect(responseData.data.seedBooks).to.exist.and.to.not.be.empty;",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n  seedBooks\r\n}\r\n",
 								"variables": ""
 							}
 						},

@@ -48,7 +48,8 @@
 											"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -63,14 +64,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -115,7 +111,8 @@
 											"  pm.expect(responseData.data.seedBooks).to.exist.and.to.not.be.empty;",
 											"});"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -130,14 +127,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -197,14 +189,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -260,14 +247,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -307,14 +289,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -355,14 +332,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -427,14 +399,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -509,14 +476,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -582,14 +544,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/graphql",
-							"protocol": "http",
+							"raw": "{{baseUrl}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"graphql"
+								"{{baseUrl}}"
 							]
 						}
 					},
@@ -649,14 +606,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/graphql",
-							"protocol": "http",
+							"raw": "{{baseUrl}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"graphql"
+								"{{baseUrl}}"
 							]
 						}
 					},
@@ -710,14 +662,9 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/graphql",
-							"protocol": "http",
+							"raw": "{{baseUrl}}",
 							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"graphql"
+								"{{baseUrl}}"
 							]
 						}
 					},
@@ -779,8 +726,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"packages": {},
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -795,14 +745,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -880,14 +825,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -938,8 +878,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"packages": {},
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -954,14 +897,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1016,8 +954,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"packages": {},
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1032,14 +973,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1121,14 +1057,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1196,14 +1127,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1234,7 +1160,7 @@
 											"    const responseData = pm.response.json();",
 											"    const updatedBook = responseData.data.updateBook;",
 											"",
-											"    pm.expect(updatedBook.isbn13).to.eql(\"1\");  // or whatever value you sent",
+											"    pm.expect(updatedBook.isbn13).to.eql(\"1\"); ",
 											"    pm.expect(updatedBook.title).to.eql(\"HenriksAbsoluteNEWESTbook\");",
 											"    pm.expect(updatedBook.author).to.eql(\"HenrikMattssonETAL\");",
 											"    pm.expect(updatedBook.rating).to.eql(10.0);",
@@ -1280,14 +1206,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1350,14 +1271,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1417,14 +1333,9 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
@@ -1487,89 +1398,15 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/graphql",
-									"protocol": "http",
+									"raw": "{{baseUrl}}",
 									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"graphql"
+										"{{baseUrl}}"
 									]
 								}
 							},
 							"response": []
 						}
 					]
-				}
-			]
-		},
-		{
-			"name": "Database Copy",
-			"item": [
-				{
-					"name": "Clear database (clearBooks)",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {",
-									"  pm.expect(pm.response.code).to.equal(200);",
-									"});",
-									"",
-									"",
-									"pm.test(\"Response has the required 'data' field\", function () {",
-									"    const responseData = pm.response.json();",
-									"    ",
-									"    pm.expect(responseData).to.have.property('data');",
-									"});",
-									"",
-									"",
-									"pm.test(\"ClearBooks field is present in the response\", function () {",
-									"  const responseData = pm.response.json();",
-									"  pm.expect(responseData.data.clearBooks).to.exist;",
-									"});",
-									"",
-									"",
-									"pm.test(\"ClearBooks value should not be null or empty\", function () {",
-									"  const responseData = pm.response.json();",
-									"  ",
-									"  pm.expect(responseData.data.clearBooks).to.not.be.null.and.to.not.be.empty;",
-									"});",
-									"",
-									"",
-									"pm.test(\"Content-Type header is application/json\", function () {",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "graphql",
-							"graphql": {
-								"query": "mutation {\r\n  clearBooks\r\n}",
-								"variables": ""
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/graphql",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"graphql"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		}

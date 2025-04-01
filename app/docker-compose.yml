@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  spring-app:
+    build: .
+    ports:
+      - "5001:8080"
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/books_database
+      DB_USER: postgres
+      DB_PASSWORD: lassokastning
+      JWT_SECRET: C3UE0DCjvlu1Do0T/yeEJPEMgIplHVlacNtxCh5bqxk=
+
+  db:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: books_database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: lassokastning

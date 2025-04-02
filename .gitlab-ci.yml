@@ -37,4 +37,4 @@ integration-test:
     - echo "Server is up!"
 
     - npm install -g newman
-    - newman run 1dv027-API.postman_collection.json
+    - newman run 1dv027-API.postman_collection.json --1dv027-API.postman_environment.json

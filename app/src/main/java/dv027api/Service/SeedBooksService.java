@@ -7,6 +7,7 @@ import dv027api.Repository.UserRepository;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,6 +58,7 @@ public class SeedBooksService {
       String[] line;
       boolean isFirstLine = true;
       Set<String> seenIsbn = new HashSet<>();
+      List<Book> booksToInsert = new ArrayList<>();
 
       while ((line = reader.readNext()) != null) {
         if (isFirstLine) {
@@ -73,17 +75,27 @@ public class SeedBooksService {
           if (isbn13.isEmpty() || seenIsbn.contains(isbn13))
             continue;
 
+          if (isbn13.length() > 255)
+            isbn13 = isbn13.substring(0, 255);
+          if (title.length() > 255)
+            title = title.substring(0, 255);
+          if (author.length() > 255)
+            author = author.substring(0, 255);
+
           seenIsbn.add(isbn13);
           Book book = new Book(isbn13, title, author, rating);
-          bookRepository.save(book);
+          booksToInsert.add(book);
+
           inserted++;
 
         } catch (Exception e) {
           continue;
         }
       }
+      bookRepository.saveAll(booksToInsert);
     } catch (Exception e) {
-      return "An error happened with the seeding";
+      e.printStackTrace();
+      return "An error happened with the seeding: " + e.getMessage();
     }
 
     System.out.println("Seeded successfully. Inserted " + inserted + " books!");

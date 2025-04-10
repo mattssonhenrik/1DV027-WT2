@@ -14,7 +14,7 @@ services:
       JWT_SECRET: C3UE0DCjvlu1Do0T/yeEJPEMgIplHVlacNtxCh5bqxk=
 
   frontend:
-    build: ./frontend
+    build: ./frontend/wt2
     ports:
       - "5002:80"
     depends_on:

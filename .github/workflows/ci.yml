@@ -19,7 +19,6 @@ jobs:
 
       - name: Build Spring Boot
         run: |
-          cd app
           ./gradlew clean build
 
       - name: Set up Node 18

@@ -1,12 +1,12 @@
-version: "3.8"
-
 services:
   spring-app:
     build: ./app
     ports:
-      - "5001:8080"
+      - "5003:8080"
     depends_on:
       - db
+    volumes:
+    - ./app/.env:/app/.env
     environment:
       DB_URL: jdbc:postgresql://db:5432/books_database
       DB_USER: postgres
@@ -24,7 +24,7 @@ services:
     image: postgres:16
     restart: always
     ports:
-      - "5432:5432"
+      - "5542:5432"
     environment:
       POSTGRES_DB: books_database
       POSTGRES_USER: postgres

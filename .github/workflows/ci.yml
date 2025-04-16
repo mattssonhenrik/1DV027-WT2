@@ -31,3 +31,18 @@ jobs:
           cd frontend/react-frontend
           npm install
           npm run build
+
+  deploy:
+    needs: build  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to remote VM
+        uses: appleboy/ssh-action@v0.1.14
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/wt2
+            docker compose pull
+            docker compose up -d

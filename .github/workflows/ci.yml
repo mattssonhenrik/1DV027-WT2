@@ -43,6 +43,7 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.ID_GITHUB }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
             cd /var/www/wt2
             docker compose pull
